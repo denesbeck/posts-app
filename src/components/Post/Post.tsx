@@ -52,16 +52,15 @@ const Post = ({ id, title, body, deletePost }: PostProps) => {
                 >
                     {title}
                 </p>
-                {isOpen ? (
-                    <>
-                        <p className='w-full mt-2 transition-colors duration-300 text-slate-500 dark:text-gray-400 animate-textFocusIn'>
-                            {body}
-                        </p>
-                        <div className='flex justify-end'>
-                            <FaQuoteLeft className='w-5 h-5 mt-2 transition-colors duration-300 animate-textFocusIn dark:text-gray-200' />
-                        </div>
-                    </>
-                ) : null}
+                <div className={`${isOpen ? 'max-h-96' : 'max-h-0'} overflow-hidden transition-all duration-700`}>
+                    <p className='w-full mt-2 transition-colors duration-300 text-slate-500 dark:text-gray-400 animate-textFocusIn'>
+                        {body}
+                    </p>
+
+                    <div className='flex justify-end'>
+                        <FaQuoteLeft className='w-5 h-5 mt-2 transition-colors duration-300 animate-textFocusIn dark:text-gray-200' />
+                    </div>
+                </div>
             </div>
         </>
     )
