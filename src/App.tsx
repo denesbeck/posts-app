@@ -45,7 +45,7 @@ const App = () => {
             return filteredPosts.map((post: PostSchema) => {
                 return (
                     <Suspense fallback={<div>Loading...</div>}>
-                        <Post key={post.id} id={post.id} title={post.title} body={post.body} />
+                        <Post key={post.id} id={post.id} title={post.title} body={post.body} deletePost={deletePost} />
                     </Suspense>
                 )
             })

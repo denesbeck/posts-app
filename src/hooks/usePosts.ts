@@ -90,13 +90,13 @@ function usePosts() {
         }
     }
 
-    const deletePost = async () => {
+    const deletePost = async (id: number) => {
         setIsLoading(true)
         try {
-            await fetch(`https://jsonplaceholder.typicode.com/posts/1`, {
+            await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
                 method: 'DELETE',
             })
-            setPosts((prevState) => prevState.filter((el) => el.id !== 1))
+            setPosts((prevState) => prevState.filter((el) => el.id !== id))
             setIsLoading(false)
         } catch {
             console.error('Error occurred at deletePost()!')
