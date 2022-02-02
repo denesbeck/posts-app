@@ -27,7 +27,7 @@ const ScrollToTopButton = () => {
     return (
         <div
             onClick={() => scrollToTop()}
-            className='fixed p-2 text-gray-200 bg-teal-500 rounded-full shadow-md cursor-pointer lg:right-10 xl:p-3 hover:bg-teal-400 lg:mb-0 bottom-24 sm:mb-2 sm:right-8 lg:bottom-28 right-6 xl:bottom-32 xl:right-12'
+            className='fixed p-2 text-gray-200 bg-teal-500 rounded-full shadow-md cursor-pointer animate-slideInBottom lg:right-10 xl:p-3 hover:bg-teal-400 lg:mb-0 bottom-24 sm:mb-2 sm:right-8 lg:bottom-28 right-6 xl:bottom-32 xl:right-12'
         >
             <IoIosArrowUp className='w-8 h-8' />
         </div>

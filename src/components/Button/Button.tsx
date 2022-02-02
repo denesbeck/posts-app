@@ -1,10 +1,10 @@
-interface ButtonSchema {
+interface ButtonProps {
     type: 'primary' | 'secondary' | 'cancel'
     label: string
     handler: () => void
 }
 
-function Button({ type, label, handler }: ButtonSchema) {
+function Button({ type, label, handler }: ButtonProps) {
     const renderButton = () => {
         switch (type) {
             case 'primary':

@@ -2,14 +2,14 @@ import { useRef } from 'react'
 import { useClickOutside } from '../../hooks'
 import { Button } from '..'
 
-interface ConfirmationDialogSchema {
+interface DialogProps {
     isVisible: boolean
     setIsVisible: (value: boolean) => void
     handler: () => void
     message: string
 }
 
-const ConfirmationDialog = ({ isVisible, setIsVisible, handler, message }: ConfirmationDialogSchema) => {
+const Dialog = ({ isVisible, setIsVisible, handler, message }: DialogProps) => {
     const ref = useRef(null)
 
     useClickOutside(isVisible, ref, () => setIsVisible(false))
@@ -19,7 +19,7 @@ const ConfirmationDialog = ({ isVisible, setIsVisible, handler, message }: Confi
         <div className='fixed top-0 left-0 z-40 w-screen h-screen overflow-hidden bg-gray-900 bg-opacity-80 backdrop-blur-sm'>
             <div
                 ref={ref}
-                className='relative px-8 py-6 -translate-x-1/2 -translate-y-1/2 bg-white rounded shadow w-max left-1/2 top-1/2 animate-[textFocusIn_0.3s_linear]'
+                className='relative px-8 py-6 -translate-x-1/2 -translate-y-1/2 bg-white rounded shadow left-1/2 top-1/2 animate-[textFocusIn_0.3s_linear] sm:w-max w-[18rem]'
             >
                 <div className='grid justify-center gap-y-4'>
                     <div className='text-base font-medium text-gray-800'>{message}</div>
@@ -33,4 +33,4 @@ const ConfirmationDialog = ({ isVisible, setIsVisible, handler, message }: Confi
     )
 }
 
-export default ConfirmationDialog
+export default Dialog

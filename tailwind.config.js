@@ -24,6 +24,14 @@ module.exports = {
                         opacity: '1',
                     },
                 },
+                jumpingDots: {
+                    '10%': {
+                        transform: 'translateY(0px)',
+                    },
+                    '50%': {
+                        transform: 'translateY(-20px)',
+                    },
+                },
             },
             animation: {
                 slideInBottom: 'slideInBottom 0.5s ease-in-out',

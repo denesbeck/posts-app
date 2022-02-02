@@ -1,64 +1,49 @@
-import { lazy, Suspense, useState, useEffect } from 'react'
-import { GiVintageRobot } from 'react-icons/gi'
-import { ActionBar, AddButton, Header, ScrollToTopButton } from './components'
-import usePosts from './hooks/usePosts'
-const Post = lazy(() => import('./components/Post'))
-
-interface PostSchema {
-    userId: number
-    id: number
-    title: string
-    body: string
-}
+import { useReducer } from 'react'
+import { useFilter, usePosts } from './hooks'
+import { ActionBar, AddButton, Header, Loading, NoResults, Post, ScrollToTopButton } from './components'
+import GlobalContext from './contexts/globalContext'
+import { initialState, reducer } from './reducers/globalReducer'
+import LazyLoad from 'react-lazyload'
+import { PostSchema, GlobalStateSchema } from './interfaces/posts'
 
 const App = () => {
-    const [searchValue, setSearchValue] = useState('')
-    const [filteredPosts, setFilteredPosts] = useState<PostSchema[]>(null)
+    const [state, dispatch] = useReducer(reducer, initialState)
 
-    const { posts, addNewPost, updatePost, deletePost, isLoading } = usePosts()
-
-    useEffect(() => {
-        if (posts) {
-            const filteredList = posts.filter((el) => {
-                return (
-                    el.title.toLowerCase().trim().includes(searchValue.toLowerCase().trim()) ||
-                    el.body.toLowerCase().trim().includes(searchValue.toLowerCase().trim())
-                )
-            })
-
-            setFilteredPosts(filteredList)
-            renderPosts()
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [posts, searchValue])
+    usePosts(state, dispatch)
+    const [filteredPosts] = useFilter(state as GlobalStateSchema)
 
     const renderPosts = () => {
-        if (filteredPosts) {
-            if (filteredPosts.length === 0) {
-                return (
-                    <div className='main--no-records--container'>
-                        <GiVintageRobot className='main--no-records--icon' />
-                        <div className='main--no-records--message'>No records based on your search criterion! :(</div>
-                    </div>
-                )
-            }
-            return filteredPosts.map((post: PostSchema) => {
-                return (
-                    <Suspense fallback={<div>Loading...</div>}>
-                        <Post key={post.id} id={post.id} title={post.title} body={post.body} deletePost={deletePost} />
-                    </Suspense>
-                )
-            })
+        if (!filteredPosts.length) {
+            return <NoResults />
         }
+        return (
+            <div className='grid gap-4 py-12 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 animate-slideInBottom'>
+                {filteredPosts.map((post: PostSchema) => {
+                    return (
+                        <LazyLoad height={80} key={post.id}>
+                            <Post id={post.id} title={post.title} body={post.body} />
+                        </LazyLoad>
+                    )
+                })}
+            </div>
+        )
     }
+
+    if (!filteredPosts) return null
 
     return (
         <div className='h-full min-h-screen px-6 font-mono transition-all duration-300 dark:bg-slate-800 bg-slate-100 sm:px-8 lg:px-10 2xl:px-12'>
-            <Header />
-            <ActionBar />
-            <div className='grid gap-4 py-12 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4'>{renderPosts()}</div>
+            <GlobalContext.Provider value={{ state: state, dispatch: dispatch }}>
+                <div className='pt-4 space-y-8 xl:space-y-0 xl:flex'>
+                    <Header />
+                    <div className='ml-auto'></div>
+                    <ActionBar />
+                </div>
+                {renderPosts()}
+            </GlobalContext.Provider>
             <AddButton />
             <ScrollToTopButton />
+            {state.loading ? <Loading /> : null}
         </div>
     )
 }

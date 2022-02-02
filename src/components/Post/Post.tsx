@@ -1,17 +1,20 @@
 import { FaQuoteRight, FaQuoteLeft, FaTrashAlt, FaPencilAlt } from 'react-icons/fa'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { usePosts } from '../../hooks'
 import { Dialog } from '..'
+import GlobalContext from '../../contexts/globalContext'
 
 interface PostProps {
     id: number
     title: string
     body: string
-    deletePost: (id: number) => void
 }
 
-const Post = ({ id, title, body, deletePost }: PostProps) => {
+const Post = ({ id, title, body }: PostProps) => {
+    const globalContext = useContext(GlobalContext)
     const [isOpen, setIsOpen] = useState(false)
     const [isDialogVisible, setIsDialogVisible] = useState(false)
+    const { deletePost } = usePosts(globalContext.state, globalContext.dispatch)
 
     return (
         <>
@@ -26,7 +29,7 @@ const Post = ({ id, title, body, deletePost }: PostProps) => {
             <div
                 className={`${
                     isOpen ? 'border-teal-500' : 'border-slate-800 dark:border-slate-500'
-                } transition-colors duration-300 border w-full h-max bg-white dark:bg-gray-800 p-4 rounded relative border-l-8 hover:border-teal-500 dark:hover:border-teal-500 animate-slideInBottom`}
+                } transition-colors duration-300 border w-full h-max bg-white dark:bg-gray-800 p-4 rounded relative border-l-8 hover:border-teal-500 dark:hover:border-teal-500`}
             >
                 <FaQuoteRight className='w-5 h-5 mb-2 transition-colors duration-300 dark:text-gray-200' />
                 {isOpen ? (
@@ -52,7 +55,7 @@ const Post = ({ id, title, body, deletePost }: PostProps) => {
                 >
                     {title}
                 </p>
-                <div className={`${isOpen ? 'max-h-96' : 'max-h-0'} overflow-hidden transition-all duration-700`}>
+                <div className={`${isOpen ? 'max-h-96' : 'max-h-0'} overflow-hidden transition-all duration-500`}>
                     <p className='w-full mt-2 transition-colors duration-300 text-slate-500 dark:text-gray-400 animate-textFocusIn'>
                         {body}
                     </p>

@@ -1,28 +1,19 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 
-interface PostSchema {
-    userId: number
-    id: number
-    title: string
-    body: string
-}
-
-function usePosts() {
-    const [isLoading, setIsLoading] = useState(false)
-    const [posts, setPosts] = useState<PostSchema[]>(null)
-
+function usePosts(state, dispatch) {
     useEffect(() => {
         getPosts()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const getPosts = () => {
-        setIsLoading(true)
+        dispatch({ type: 'LOADING', value: true })
         try {
             fetch('https://jsonplaceholder.typicode.com/posts')
                 .then((response) => response.json())
                 .then((json) => {
-                    setPosts(json)
-                    setIsLoading(false)
+                    dispatch({ type: 'POSTS', value: json })
+                    dispatch({ type: 'LOADING', value: false })
                 })
         } catch {
             console.error('Error occurred at getPosts()!')
@@ -30,10 +21,10 @@ function usePosts() {
     }
 
     const addNewPost = async (title: string, body: string) => {
-        setIsLoading(true)
+        dispatch({ type: 'LOADING', value: true })
 
         try {
-            const max = posts.reduce((prev, current) => {
+            const max = state.posts.reduce((prev, current) => {
                 return prev.id > current.id ? prev : current
             })
             fetch('https://jsonplaceholder.typicode.com/posts', {
@@ -50,8 +41,8 @@ function usePosts() {
             })
                 .then((response) => response.json())
                 .then((json) => {
-                    setPosts([json, ...posts])
-                    setIsLoading(false)
+                    dispatch({ type: 'POSTS', value: [json, ...state.posts] })
+                    dispatch({ type: 'LOADING', value: false })
                 })
         } catch {
             console.error('Error occurred at addNewPost()!')
@@ -59,7 +50,7 @@ function usePosts() {
     }
 
     const updatePost = async (id: number, title: string, body: string) => {
-        setIsLoading(true)
+        dispatch({ type: 'LOADING', value: true })
         try {
             fetch('https://jsonplaceholder.typicode.com/posts/1', {
                 method: 'PUT',
@@ -75,15 +66,15 @@ function usePosts() {
             })
                 .then((response) => response.json())
                 .then(() => {
-                    const postsCopy = [...posts]
+                    const postsCopy = [...state.posts]
                     postsCopy.forEach((el) => {
                         if (el.id === id) {
                             el.title = title
                             el.body = body
                         }
                     })
-                    setPosts(postsCopy)
-                    setIsLoading(false)
+                    dispatch({ type: 'POSTS', value: postsCopy })
+                    dispatch({ type: 'LOADING', value: false })
                 })
         } catch {
             console.error('Error occurred at updatePost()!')
@@ -91,18 +82,18 @@ function usePosts() {
     }
 
     const deletePost = async (id: number) => {
-        setIsLoading(true)
+        dispatch({ type: 'LOADING', value: true })
         try {
             await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
                 method: 'DELETE',
             })
-            setPosts((prevState) => prevState.filter((el) => el.id !== id))
-            setIsLoading(false)
+            dispatch({ type: 'POSTS', value: state.posts.filter((post) => post.id !== id) })
+            dispatch({ type: 'LOADING', value: false })
         } catch {
             console.error('Error occurred at deletePost()!')
         }
     }
-    return { posts: posts, addNewPost: addNewPost, updatePost: updatePost, deletePost: deletePost, isLoading: isLoading }
+    return { addNewPost, updatePost, deletePost }
 }
 
 export default usePosts
