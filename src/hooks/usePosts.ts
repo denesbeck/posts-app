@@ -7,13 +7,11 @@ function usePosts(state, dispatch) {
     }, [])
 
     const getPosts = () => {
-        dispatch({ type: 'LOADING', value: true })
         try {
             fetch('https://jsonplaceholder.typicode.com/posts')
                 .then((response) => response.json())
                 .then((json) => {
                     dispatch({ type: 'POSTS', value: json })
-                    dispatch({ type: 'LOADING', value: false })
                 })
         } catch {
             console.error('Error occurred at getPosts()!')
