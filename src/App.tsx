@@ -20,7 +20,7 @@ const App = () => {
             <div className='grid gap-4 py-12 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 animate-slideInBottom'>
                 {filteredPosts.map((post: PostSchema) => {
                     return (
-                        <LazyLoad height={80} key={post.id}>
+                        <LazyLoad height={100} offset={100} key={post.id} unmountIfInvisible resize>
                             <Post id={post.id} title={post.title} body={post.body} />
                         </LazyLoad>
                     )
