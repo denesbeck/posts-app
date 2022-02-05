@@ -66,7 +66,7 @@ function InputDialog({ isVisible, setIsVisible, data }: InputDialogProps) {
                 <div className='flex space-x-6'>
                     <Button
                         type='primary'
-                        label='Submit'
+                        label={data ? 'Update' : 'Submit'}
                         handler={() => {
                             if (title.length && body.length) {
                                 if (data) {
@@ -75,8 +75,10 @@ function InputDialog({ isVisible, setIsVisible, data }: InputDialogProps) {
                                     addNewPost(title, body)
                                 }
                             } else {
-                                setTitle(data.title)
-                                setBody(data.body)
+                                if (data) {
+                                    setTitle(data.title)
+                                    setBody(data.body)
+                                }
                                 NotificationManager.error('No title or content has been entered.')
                             }
                             setIsVisible(false)

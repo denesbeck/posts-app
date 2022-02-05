@@ -1,4 +1,5 @@
 import { StateSchema, ActionSchema, PostSchema } from '../reducers/globalReducer'
+import { NotificationManager } from 'react-notifications'
 
 function usePosts(state: StateSchema, dispatch: (action: ActionSchema) => void) {
     const getPosts = () => {
@@ -9,7 +10,7 @@ function usePosts(state: StateSchema, dispatch: (action: ActionSchema) => void) 
                     dispatch({ type: 'POSTS', value: json })
                 })
         } catch {
-            console.error('Error occurred at getPosts()!')
+            NotificationManager.error('Internal server error: Unable to fetch posts.')
         }
     }
 
@@ -36,9 +37,10 @@ function usePosts(state: StateSchema, dispatch: (action: ActionSchema) => void) 
                 .then((json) => {
                     dispatch({ type: 'POSTS', value: [json, ...state.posts] })
                     dispatch({ type: 'LOADING', value: false })
+                    NotificationManager.success('Post has been added successfully.')
                 })
         } catch {
-            console.error('Error occurred at addNewPost()!')
+            NotificationManager.error('Internal server error: Unable to add new post.')
         }
     }
 
@@ -68,9 +70,10 @@ function usePosts(state: StateSchema, dispatch: (action: ActionSchema) => void) 
                     })
                     dispatch({ type: 'POSTS', value: postsCopy })
                     dispatch({ type: 'LOADING', value: false })
+                    NotificationManager.success('Post has been updated successfully.')
                 })
         } catch {
-            console.error('Error occurred at updatePost()!')
+            NotificationManager.error('Internal server error: Unable to update post.')
         }
     }
 
@@ -82,8 +85,9 @@ function usePosts(state: StateSchema, dispatch: (action: ActionSchema) => void) 
             })
             dispatch({ type: 'POSTS', value: state.posts.filter((post: PostSchema) => post.id !== id) })
             dispatch({ type: 'LOADING', value: false })
+            NotificationManager.success('Post has been deleted successfully.')
         } catch {
-            console.error('Error occurred at deletePost()!')
+            NotificationManager.error('Internal server error: Unable to delete post.')
         }
     }
     return { getPosts, addNewPost, updatePost, deletePost }

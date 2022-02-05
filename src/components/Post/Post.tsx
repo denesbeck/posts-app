@@ -20,17 +20,23 @@ const Post = ({ id, title, body }: PostProps) => {
 
     return (
         <>
-            <Dialog
-                isVisible={isDialogVisible}
-                setIsVisible={setIsDialogVisible}
-                message='Are you sure that you want to delete this post?'
-                handler={() => deletePost(id)}
-            />
-            <InputDialog
-                isVisible={isInputDialogVisible}
-                setIsVisible={setIsInputDialogVisible}
-                data={{ id: id, title: title, body: body }}
-            />
+            {isDialogVisible ? (
+                <Dialog
+                    isVisible={isDialogVisible}
+                    setIsVisible={setIsDialogVisible}
+                    message='Are you sure that you want to delete this post?'
+                    handler={() => deletePost(id)}
+                />
+            ) : null}
+
+            {isInputDialogVisible ? (
+                <InputDialog
+                    isVisible={isInputDialogVisible}
+                    setIsVisible={setIsInputDialogVisible}
+                    data={{ id: id, title: title, body: body }}
+                />
+            ) : null}
+
             <div
                 className={`${
                     isOpen ? 'border-teal-500' : 'border-slate-800 dark:border-slate-500'

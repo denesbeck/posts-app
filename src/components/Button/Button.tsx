@@ -18,7 +18,7 @@ function Button({ type, label, handler }: ButtonProps) {
 
     return (
         <button
-            className={`rounded px-4 py-2 font-bold text-white ${renderButton()} focus:outline-none`}
+            className={`rounded px-4 py-2 font-bold text-white ${renderButton()} outline-2 outline-offset-2 outline-teal-500 focus:outline`}
             type='button'
             onClick={() => handler()}
         >
