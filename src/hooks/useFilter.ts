@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { forceVisible } from 'react-lazyload'
-import { PostSchema, GlobalStateSchema } from '../interfaces/posts'
+import { StateSchema, ActionSchema, PostSchema } from '../reducers/globalReducer'
 
-function useFilter(state: GlobalStateSchema) {
-    const [filteredPosts, setFilteredPosts] = useState<PostSchema[]>(null)
-
+function useFilter(state: StateSchema, dispatch: (action: ActionSchema) => void) {
     useEffect(() => {
         if (state.posts) {
+            console.log(state.posts)
             if ((state.searchString as string).length) {
                 const filteredList = (state.posts as PostSchema[]).filter((el) => {
                     return (
@@ -20,15 +19,14 @@ function useFilter(state: GlobalStateSchema) {
                             .includes((state.searchString as string).toLowerCase().trim())
                     )
                 })
-                setFilteredPosts(filteredList)
+                dispatch({ type: 'FILTERED_POSTS', value: filteredList })
                 forceVisible()
                 return
             }
-            setFilteredPosts(state.posts as PostSchema[])
+            dispatch({ type: 'FILTERED_POSTS', value: state.posts })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.posts, state.searchString])
-    return [filteredPosts]
 }
 
 export default useFilter

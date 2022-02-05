@@ -2,9 +2,10 @@ import { FaQuoteRight, FaQuoteLeft, FaTrashAlt, FaPencilAlt } from 'react-icons/
 import { useState, useContext } from 'react'
 import { usePosts } from '../../hooks'
 import { Dialog } from '..'
+import { InputDialog } from '..'
 import GlobalContext from '../../contexts/globalContext'
 
-interface PostProps {
+export interface PostProps {
     id: number
     title: string
     body: string
@@ -14,54 +15,59 @@ const Post = ({ id, title, body }: PostProps) => {
     const globalContext = useContext(GlobalContext)
     const [isOpen, setIsOpen] = useState(false)
     const [isDialogVisible, setIsDialogVisible] = useState(false)
+    const [isInputDialogVisible, setIsInputDialogVisible] = useState(false)
     const { deletePost } = usePosts(globalContext.state, globalContext.dispatch)
 
     return (
         <>
-            {isDialogVisible ? (
-                <Dialog
-                    isVisible={isDialogVisible}
-                    setIsVisible={setIsDialogVisible}
-                    message='Are you sure that you want to delete this post?'
-                    handler={() => deletePost(id)}
-                />
-            ) : null}
+            <Dialog
+                isVisible={isDialogVisible}
+                setIsVisible={setIsDialogVisible}
+                message='Are you sure that you want to delete this post?'
+                handler={() => deletePost(id)}
+            />
+            <InputDialog
+                isVisible={isInputDialogVisible}
+                setIsVisible={setIsInputDialogVisible}
+                data={{ id: id, title: title, body: body }}
+            />
             <div
                 className={`${
                     isOpen ? 'border-teal-500' : 'border-slate-800 dark:border-slate-500'
-                } transition-colors duration-300 border w-full h-max bg-white dark:bg-gray-800 p-4 rounded relative border-l-8 hover:border-teal-500 dark:hover:border-teal-500`}
+                } relative h-max w-full rounded border border-l-8 bg-white p-4 transition-colors duration-300 hover:border-teal-500 dark:bg-gray-800 dark:hover:border-teal-500`}
             >
-                <FaQuoteRight className='w-5 h-5 mb-2 transition-colors duration-300 dark:text-gray-200' />
+                <FaQuoteRight className='mb-2 h-5 w-5 transition-colors duration-300 dark:text-gray-200' />
                 {isOpen ? (
-                    <div className='absolute flex space-x-4 top-4 right-4 animate-textFocusIn'>
+                    <div className='absolute top-4 right-4 flex animate-textFocusIn space-x-4'>
                         <FaTrashAlt
-                            className='w-4 h-4 text-pink-700 transition-transform duration-300 ease-in-out cursor-pointer hover:scale-125'
+                            className='h-4 w-4 cursor-pointer text-pink-700 transition-transform duration-300 ease-in-out hover:scale-125'
                             onClick={(e) => {
                                 e.stopPropagation()
                                 setIsDialogVisible(true)
                             }}
                         />
                         <FaPencilAlt
-                            className='w-4 h-4 text-blue-400 transition-transform duration-300 ease-in-out cursor-pointer hover:scale-125'
+                            className='h-4 w-4 cursor-pointer text-blue-400 transition-transform duration-300 ease-in-out hover:scale-125'
                             onClick={(e) => {
                                 e.stopPropagation()
+                                setIsInputDialogVisible(true)
                             }}
                         />
                     </div>
                 ) : null}
                 <p
-                    className='transition-colors duration-300 cursor-pointer dark:text-white'
+                    className='cursor-pointer transition-colors duration-300 dark:text-white'
                     onClick={() => setIsOpen((prevState) => !prevState)}
                 >
                     {title}
                 </p>
                 <div className={`${isOpen ? 'max-h-96' : 'max-h-0'} overflow-hidden transition-all duration-500`}>
-                    <p className='w-full mt-2 transition-colors duration-300 text-slate-500 dark:text-gray-400 animate-textFocusIn'>
+                    <p className='mt-2 w-full animate-textFocusIn text-slate-500 transition-colors duration-300 dark:text-gray-400'>
                         {body}
                     </p>
 
                     <div className='flex justify-end'>
-                        <FaQuoteLeft className='w-5 h-5 mt-2 transition-colors duration-300 animate-textFocusIn dark:text-gray-200' />
+                        <FaQuoteLeft className='mt-2 h-5 w-5 animate-textFocusIn transition-colors duration-300 dark:text-gray-200' />
                     </div>
                 </div>
             </div>

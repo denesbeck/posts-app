@@ -1,5 +1,6 @@
 import { IoIosArrowUp } from 'react-icons/io'
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 
 const ScrollToTopButton = () => {
     const [isVisible, setIsVisible] = useState(false)
@@ -24,13 +25,14 @@ const ScrollToTopButton = () => {
     }, [])
 
     if (!isVisible) return null
-    return (
+    return createPortal(
         <div
             onClick={() => scrollToTop()}
-            className='fixed p-2 text-gray-200 bg-teal-500 rounded-full shadow-md cursor-pointer animate-slideInBottom lg:right-10 xl:p-3 hover:bg-teal-400 lg:mb-0 bottom-24 sm:mb-2 sm:right-8 lg:bottom-28 right-6 xl:bottom-32 xl:right-12'
+            className='fixed bottom-24 right-6 z-10 animate-slideInBottom cursor-pointer rounded-full bg-teal-500 p-2 text-gray-200 shadow-md hover:bg-teal-400 sm:right-8 sm:mb-2 lg:right-10 lg:bottom-28 lg:mb-0 xl:bottom-32 xl:right-12 xl:p-3'
         >
-            <IoIosArrowUp className='w-8 h-8' />
-        </div>
+            <IoIosArrowUp className='h-8 w-8' />
+        </div>,
+        document.getElementById('root')
     )
 }
 

@@ -1,6 +1,6 @@
 function Header() {
     return (
-        <div className='text-2xl sm:text-3xl lg:text-4xl font-bold animate-[textFocusIn_1s_ease-in-out] text-slate-800 dark:text-slate-200'>
+        <div className='animate-[textFocusIn_1s_ease-in-out] text-2xl font-bold text-slate-800 dark:text-slate-200 sm:text-3xl lg:text-4xl'>
             <p>Posts App</p>
             <p className='text-lg'>
                 based on

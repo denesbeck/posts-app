@@ -10,15 +10,15 @@ function Button({ type, label, handler }: ButtonProps) {
             case 'primary':
                 return 'bg-blue-400 hover:bg-blue-300'
             case 'secondary':
-                return 'bg-gray-600 rounded hover:bg-gray-800'
+                return 'bg-gray-600 dark:bg-gray-700 rounded hover:bg-gray-500 dark:hover:bg-gray-600'
             case 'cancel':
-                return 'bg-rose-600 hover:bg-pink-800'
+                return 'bg-pink-700 dark:bg-pink-800 dark:hover:bg-pink-700 hover:bg-pink-600'
         }
     }
 
     return (
         <button
-            className={`px-4 py-2 font-bold text-white rounded ${renderButton()} focus:outline-none`}
+            className={`rounded px-4 py-2 font-bold text-white ${renderButton()} focus:outline-none`}
             type='button'
             onClick={() => handler()}
         >

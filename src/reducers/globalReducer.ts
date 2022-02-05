@@ -1,18 +1,30 @@
-import { PostSchema } from '../interfaces/posts'
+export interface PostSchema {
+    userId: number
+    id: number
+    title: string
+    body: string
+}
 
 const initialState = {
     loading: false,
     searchString: '',
     posts: null,
+    filteredPosts: null,
 }
 
-interface GlobalStateSchema {
+export interface StateSchema {
     loading: boolean
     searchString: string
     posts: PostSchema[]
+    filteredPosts: PostSchema[]
 }
 
-const reducer = (state: GlobalStateSchema, action: { type: string; value: boolean | string | PostSchema[] }) => {
+export interface ActionSchema {
+    type: string
+    value: boolean | string | PostSchema[]
+}
+
+const reducer = (state: StateSchema, action: ActionSchema) => {
     switch (action.type) {
         case 'LOADING':
             return {
@@ -28,6 +40,11 @@ const reducer = (state: GlobalStateSchema, action: { type: string; value: boolea
             return {
                 ...state,
                 posts: action.value,
+            }
+        case 'FILTERED_POSTS':
+            return {
+                ...state,
+                filteredPosts: action.value,
             }
         default:
             return { ...state }

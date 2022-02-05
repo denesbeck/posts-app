@@ -1,24 +1,32 @@
-import { useReducer } from 'react'
+import { useReducer, useEffect } from 'react'
 import { useFilter, usePosts } from './hooks'
 import { ActionBar, AddButton, Header, Loading, NoResults, Post, ScrollToTopButton } from './components'
 import GlobalContext from './contexts/globalContext'
 import { initialState, reducer } from './reducers/globalReducer'
 import LazyLoad from 'react-lazyload'
-import { PostSchema, GlobalStateSchema } from './interfaces/posts'
+import { StateSchema, ActionSchema, PostSchema } from './reducers/globalReducer'
+import { NotificationContainer } from 'react-notifications'
+import 'react-notifications/lib/notifications.css'
+import './notifications.css'
 
 const App = () => {
     const [state, dispatch] = useReducer(reducer, initialState)
 
-    usePosts(state, dispatch)
-    const [filteredPosts] = useFilter(state as GlobalStateSchema)
+    const { getPosts } = usePosts(state as StateSchema, dispatch as (action: ActionSchema) => void)
+    useFilter(state as StateSchema, dispatch as (action: ActionSchema) => void)
+
+    useEffect(() => {
+        getPosts()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const renderPosts = () => {
-        if (!filteredPosts.length) {
+        if (!(state.filteredPosts as PostSchema[]).length) {
             return <NoResults />
         }
         return (
-            <div className='grid gap-4 py-12 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 animate-slideInBottom'>
-                {filteredPosts.map((post: PostSchema) => {
+            <div className='grid animate-slideInBottom gap-4 py-12 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4'>
+                {(state.filteredPosts as PostSchema[]).map((post: PostSchema) => {
                     return (
                         <LazyLoad height={100} offset={100} key={post.id} unmountIfInvisible resize>
                             <Post id={post.id} title={post.title} body={post.body} />
@@ -29,20 +37,20 @@ const App = () => {
         )
     }
 
-    if (!filteredPosts) return null
-
+    if (!state.filteredPosts) return null
     return (
-        <div className='h-full min-h-screen px-6 font-mono transition-all duration-300 dark:bg-slate-800 bg-slate-100 sm:px-8 lg:px-10 2xl:px-12'>
+        <div className='h-full min-h-screen bg-slate-100 px-6 font-mono transition-all duration-300 dark:bg-slate-800 sm:px-8 lg:px-10 2xl:px-12'>
             <GlobalContext.Provider value={{ state: state, dispatch: dispatch }}>
-                <div className='pt-4 space-y-8 xl:space-y-0 xl:flex'>
+                <div className='space-y-8 pt-4 xl:flex xl:space-y-0'>
                     <Header />
                     <div className='ml-auto'></div>
                     <ActionBar />
                 </div>
                 {renderPosts()}
+                <AddButton />
             </GlobalContext.Provider>
-            <AddButton />
             <ScrollToTopButton />
+            <NotificationContainer />
             {state.loading ? <Loading /> : null}
         </div>
     )

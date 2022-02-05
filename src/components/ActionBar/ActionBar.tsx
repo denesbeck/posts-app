@@ -16,20 +16,20 @@ function ActionBar() {
         <>
             {isSearchVisible ? <Search isVisible={isSearchVisible} setIsVisible={setIsSearchVisible} /> : null}
 
-            <div className='flex pt-2 space-x-6 animate-textFocusIn'>
+            <div className='flex animate-textFocusIn space-x-6 pt-2'>
                 <QuickSearch setIsSearchVisible={setIsSearchVisible} />
                 <div className='ml-auto'></div>
                 <BiReset
                     onClick={() => globalContext.dispatch({ type: 'SEARCH_STRING', value: '' })}
                     className={`${
                         globalContext.state.searchString.length ? 'w-6' : 'w-0'
-                    } relative transition-all duration-300 h-6 cursor-pointer top-2.5 dark:text-gray-200 dark:hover:text-teal-500 hover:text-teal-500`}
+                    } relative top-2.5 h-6 cursor-pointer transition-all duration-300 hover:text-teal-500 dark:text-gray-200 dark:hover:text-teal-500`}
                 />
-                <div onClick={toggleTheme} className='relative cursor-pointer top-2.5'>
+                <div onClick={toggleTheme} className='relative top-2.5 cursor-pointer'>
                     {isDark ? (
-                        <BsMoonStarsFill className='w-5 h-5 transition-all duration-300 dark:text-gray-200 dark:hover:text-teal-500 hover:text-teal-500' />
+                        <BsMoonStarsFill className='h-5 w-5 transition-all duration-300 hover:text-teal-500 dark:text-gray-200 dark:hover:text-teal-500' />
                     ) : (
-                        <BsSunFill className='w-5 h-5 transition-all duration-300 dark:text-gray-200 dark:hover:text-teal-500 hover:text-teal-500' />
+                        <BsSunFill className='h-5 w-5 transition-all duration-300 hover:text-teal-500 dark:text-gray-200 dark:hover:text-teal-500' />
                     )}
                 </div>
             </div>

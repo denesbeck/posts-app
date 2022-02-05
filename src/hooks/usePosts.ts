@@ -1,11 +1,6 @@
-import { useEffect } from 'react'
+import { StateSchema, ActionSchema, PostSchema } from '../reducers/globalReducer'
 
-function usePosts(state, dispatch) {
-    useEffect(() => {
-        getPosts()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
+function usePosts(state: StateSchema, dispatch: (action: ActionSchema) => void) {
     const getPosts = () => {
         try {
             fetch('https://jsonplaceholder.typicode.com/posts')
@@ -85,13 +80,13 @@ function usePosts(state, dispatch) {
             await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
                 method: 'DELETE',
             })
-            dispatch({ type: 'POSTS', value: state.posts.filter((post) => post.id !== id) })
+            dispatch({ type: 'POSTS', value: state.posts.filter((post: PostSchema) => post.id !== id) })
             dispatch({ type: 'LOADING', value: false })
         } catch {
             console.error('Error occurred at deletePost()!')
         }
     }
-    return { addNewPost, updatePost, deletePost }
+    return { getPosts, addNewPost, updatePost, deletePost }
 }
 
 export default usePosts

@@ -1,6 +1,6 @@
 function ShortCut({ label }: { label: string }) {
     return (
-        <span className='p-1 font-semibold transition-colors duration-300 rounded shadow-sm text-slate-500 dark:bg-slate-400 dark:text-slate-700 bg-slate-300 h-max'>
+        <span className='h-max rounded bg-slate-300 p-1 font-semibold text-slate-500 shadow-sm transition-colors duration-300 dark:bg-slate-400 dark:text-slate-700'>
             {label}
         </span>
     )

@@ -3,6 +3,7 @@ import AddButton from './AddButton'
 import Button from './Button'
 import Dialog from './Dialog'
 import Header from './Header'
+import InputDialog from './InputDialog'
 import Loading from './Loading'
 import NoResults from './NoResults'
 import Post from './Post'
@@ -17,6 +18,7 @@ export {
     Button,
     Dialog,
     Header,
+    InputDialog,
     Loading,
     NoResults,
     Post,
