@@ -1,4 +1,4 @@
-# Post App
+# Posts App
 
 ## Table of Contents
 
