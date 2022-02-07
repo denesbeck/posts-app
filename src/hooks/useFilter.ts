@@ -5,7 +5,6 @@ import { StateSchema, ActionSchema, PostSchema } from '../reducers/globalReducer
 function useFilter(state: StateSchema, dispatch: (action: ActionSchema) => void) {
     useEffect(() => {
         if (state.posts) {
-            console.log(state.posts)
             if ((state.searchString as string).length) {
                 const filteredList = (state.posts as PostSchema[]).filter((el) => {
                     return (
