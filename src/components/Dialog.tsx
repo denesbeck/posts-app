@@ -1,6 +1,6 @@
 import { useRef } from 'react'
-import { useClickOutside } from '../../hooks'
-import { Button } from '..'
+import { useClickOutside } from 'hooks'
+import { Button } from 'components'
 import { createPortal } from 'react-dom'
 
 interface DialogProps {

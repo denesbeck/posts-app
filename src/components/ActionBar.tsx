@@ -1,9 +1,9 @@
 import { BsMoonStarsFill, BsSunFill } from 'react-icons/bs'
 import { BiReset } from 'react-icons/bi'
-import { useDarkMode, useQuickSearch } from '../../hooks'
-import { QuickSearch, Search } from '..'
+import { useDarkMode, useQuickSearch } from 'hooks'
+import { QuickSearch, Search } from '.'
 import { useState, useContext } from 'react'
-import GlobalContext from '../../contexts/globalContext'
+import GlobalContext from 'contexts/globalContext'
 
 function ActionBar() {
     const globalContext = useContext(GlobalContext)

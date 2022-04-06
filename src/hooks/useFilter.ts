@@ -1,21 +1,15 @@
 import { useEffect } from 'react'
 import { forceVisible } from 'react-lazyload'
-import { StateSchema, ActionSchema, PostSchema } from '../reducers/globalReducer'
+import { StateSchema, ActionSchema } from 'reducers/globalReducer'
 
 function useFilter(state: StateSchema, dispatch: (action: ActionSchema) => void) {
     useEffect(() => {
         if (state.posts) {
-            if ((state.searchString as string).length) {
-                const filteredList = (state.posts as PostSchema[]).filter((el) => {
+            if (state.searchString.length) {
+                const filteredList = state.posts.filter((el) => {
                     return (
-                        el.title
-                            .toLowerCase()
-                            .trim()
-                            .includes((state.searchString as string).toLowerCase().trim()) ||
-                        el.body
-                            .toLowerCase()
-                            .trim()
-                            .includes((state.searchString as string).toLowerCase().trim())
+                        el.title.toLowerCase().trim().includes(state.searchString.toLowerCase().trim()) ||
+                        el.body.toLowerCase().trim().includes(state.searchString.toLowerCase().trim())
                     )
                 })
                 dispatch({ type: 'FILTERED_POSTS', value: filteredList })

@@ -1,8 +1,8 @@
-import { ShortCut } from '..'
+import { ShortCut } from 'components'
 import { useRef, useContext, useEffect, useState, ChangeEvent } from 'react'
-import { useClickOutside } from '../../hooks'
+import { useClickOutside } from 'hooks'
 import { createPortal } from 'react-dom'
-import GlobalContext from '../../contexts/globalContext'
+import GlobalContext from 'contexts/globalContext'
 
 interface SearchProps {
     isVisible: boolean

@@ -1,9 +1,8 @@
 import { FaQuoteRight, FaQuoteLeft, FaTrashAlt, FaPencilAlt } from 'react-icons/fa'
 import { useState, useContext } from 'react'
-import { usePosts } from '../../hooks'
-import { Dialog } from '..'
-import { InputDialog } from '..'
-import GlobalContext from '../../contexts/globalContext'
+import { usePosts } from 'hooks'
+import { Dialog, InputDialog } from 'components'
+import GlobalContext from 'contexts/globalContext'
 
 export interface PostProps {
     id: number

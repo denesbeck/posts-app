@@ -1,6 +1,6 @@
 import { FiPlus } from 'react-icons/fi'
 import { createPortal } from 'react-dom'
-import { InputDialog } from '..'
+import { InputDialog } from 'components'
 import { useState } from 'react'
 
 function AddButton() {

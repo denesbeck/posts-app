@@ -1,5 +1,5 @@
 import { BsSearch } from 'react-icons/bs'
-import { ShortCut } from '..'
+import { ShortCut } from 'components'
 
 function QuickSearch({ setIsSearchVisible }) {
     return (

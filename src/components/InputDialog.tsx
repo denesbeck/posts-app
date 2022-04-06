@@ -1,9 +1,9 @@
-import { useClickOutside, usePosts } from '../../hooks'
+import { useClickOutside, usePosts } from 'hooks'
 import { ChangeEvent, useRef, useState, useContext } from 'react'
-import { Button } from '..'
+import { Button } from 'components'
+import { PostProps } from './Post'
 import { createPortal } from 'react-dom'
-import GlobalContext from '../../contexts/globalContext'
-import { PostProps } from '../Post/Post'
+import GlobalContext from 'contexts/globalContext'
 import { NotificationManager } from 'react-notifications'
 
 interface InputDialogProps {
@@ -15,11 +15,25 @@ interface InputDialogProps {
 function InputDialog({ isVisible, setIsVisible, data }: InputDialogProps) {
     const globalContext = useContext(GlobalContext)
     const ref = useRef(null)
-    const [title, setTitle] = useState(data ? data.title : '')
-    const [body, setBody] = useState(data ? data.body : '')
+    const [title, setTitle] = useState(data?.title || '')
+    const [body, setBody] = useState(data?.body || '')
 
     useClickOutside(isVisible, ref, () => setIsVisible(false))
     const { addNewPost, updatePost } = usePosts(globalContext.state, globalContext.dispatch)
+
+    const submitHandler = () => {
+        if (title.length && body.length) {
+            if (data) return updatePost(data.id, title, body)
+            addNewPost(title, body)
+        } else {
+            if (data) {
+                setTitle(data.title)
+                setBody(data.body)
+            }
+            NotificationManager.error('No title or content has been entered.')
+        }
+        setIsVisible(false)
+    }
 
     if (!isVisible) return null
     return createPortal(
@@ -64,26 +78,7 @@ function InputDialog({ isVisible, setIsVisible, data }: InputDialogProps) {
                     />
                 </div>
                 <div className='flex space-x-6'>
-                    <Button
-                        type='primary'
-                        label={data ? 'Update' : 'Submit'}
-                        handler={() => {
-                            if (title.length && body.length) {
-                                if (data) {
-                                    updatePost(data.id, title, body)
-                                } else {
-                                    addNewPost(title, body)
-                                }
-                            } else {
-                                if (data) {
-                                    setTitle(data.title)
-                                    setBody(data.body)
-                                }
-                                NotificationManager.error('No title or content has been entered.')
-                            }
-                            setIsVisible(false)
-                        }}
-                    />
+                    <Button type='primary' label={data ? 'Update' : 'Submit'} handler={() => submitHandler()} />
                     <Button type='secondary' label='Cancel' handler={() => setIsVisible(false)} />
                 </div>
             </div>
