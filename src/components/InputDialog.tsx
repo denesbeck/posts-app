@@ -22,9 +22,14 @@ function InputDialog({ isVisible, setIsVisible, data }: InputDialogProps) {
     const { addNewPost, updatePost } = usePosts(globalContext.state, globalContext.dispatch)
 
     const submitHandler = () => {
-        if (title.length && body.length) {
-            if (data) return updatePost(data.id, title, body)
-            addNewPost(title, body)
+        const areNotEmpty = title.length && body.length
+
+        if (areNotEmpty) {
+            if (data) {
+                updatePost(data.id, title, body)
+            } else {
+                addNewPost(title, body)
+            }
         } else {
             if (data) {
                 setTitle(data.title)
@@ -32,6 +37,7 @@ function InputDialog({ isVisible, setIsVisible, data }: InputDialogProps) {
             }
             NotificationManager.error('No title or content has been entered.')
         }
+
         setIsVisible(false)
     }
 
