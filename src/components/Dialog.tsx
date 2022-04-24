@@ -20,7 +20,7 @@ const Dialog = ({ isVisible, setIsVisible, handler, message }: DialogProps) => {
         <div className=' fixed top-0 left-0 z-10 h-screen w-screen overflow-hidden bg-gray-900 bg-opacity-80 backdrop-blur-sm'>
             <div
                 ref={ref}
-                className='relative left-1/2 top-1/2 w-[18rem] -translate-x-1/2 -translate-y-1/2  animate-[textFocusIn_0.3s_linear] rounded bg-white px-8 py-6 shadow dark:bg-slate-800 sm:w-max'
+                className='relative left-1/2 top-1/2 w-full max-w-max -translate-x-1/2 -translate-y-1/2  animate-[textFocusIn_0.3s_linear] rounded bg-white px-8 py-6 shadow dark:bg-slate-800'
             >
                 <div className='grid justify-center gap-y-4'>
                     <div className='text-base font-medium text-gray-800 dark:text-slate-200'>{message}</div>

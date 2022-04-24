@@ -25,10 +25,10 @@ const App = () => {
             return <NoResults />
         }
         return (
-            <div className='grid animate-slideInBottom gap-4 py-12 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4'>
+            <div className='flex animate-slideInBottom flex-wrap justify-center gap-4 py-12'>
                 {(state.filteredPosts as PostSchema[]).map((post: PostSchema) => {
                     return (
-                        <LazyLoad height={100} offset={100} key={post.id} unmountIfInvisible resize>
+                        <LazyLoad height={100} offset={100} key={post.id} resize>
                             <Post id={post.id} title={post.title} body={post.body} />
                         </LazyLoad>
                     )

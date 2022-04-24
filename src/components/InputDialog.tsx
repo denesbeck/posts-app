@@ -46,7 +46,7 @@ function InputDialog({ isVisible, setIsVisible, data }: InputDialogProps) {
         <div className='fixed top-0 left-0 z-10 h-screen w-screen overflow-hidden bg-gray-900 bg-opacity-80 backdrop-blur-sm'>
             <div
                 ref={ref}
-                className='relative top-1/2 left-1/2 mx-2 table h-max w-max -translate-y-1/2 -translate-x-1/2 animate-[textFocusIn_0.3s_linear] space-y-6 rounded bg-white p-6 text-slate-800 dark:bg-slate-800 dark:text-slate-200'
+                className='relative top-1/2 left-1/2 table h-max w-full max-w-max -translate-y-1/2 -translate-x-1/2 animate-[textFocusIn_0.3s_linear] space-y-6 rounded bg-white p-6 text-slate-800 dark:bg-slate-800 dark:text-slate-200'
             >
                 <div className='text-2xl'>{data ? 'Update post' : 'Add new post'}</div>
                 <div>
