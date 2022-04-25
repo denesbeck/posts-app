@@ -43,10 +43,10 @@ function InputDialog({ isVisible, setIsVisible, data }: InputDialogProps) {
 
     if (!isVisible) return null
     return createPortal(
-        <div className='fixed top-0 left-0 z-10 h-screen w-screen overflow-hidden bg-gray-900 bg-opacity-80 backdrop-blur-sm'>
+        <div className='fixed top-0 left-0 z-10 flex h-screen w-screen items-center justify-center overflow-hidden bg-gray-900 bg-opacity-80 backdrop-blur-sm'>
             <div
                 ref={ref}
-                className='relative top-1/2 left-1/2 table h-max w-full max-w-max -translate-y-1/2 -translate-x-1/2 animate-[textFocusIn_0.3s_linear] space-y-6 rounded bg-white p-6 text-slate-800 dark:bg-slate-800 dark:text-slate-200'
+                className='table h-max w-full max-w-max animate-[textFocusIn_0.3s_linear] space-y-6 rounded bg-white p-6 text-slate-800 dark:bg-slate-800 dark:text-slate-200'
             >
                 <div className='text-2xl'>{data ? 'Update post' : 'Add new post'}</div>
                 <div>
