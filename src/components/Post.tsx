@@ -37,9 +37,9 @@ const Post = ({ id, title, body }: PostProps) => {
             ) : null}
 
             <div
-                className={`max-w-[26rem] ${
+                className={`w-[26rem] ${
                     isOpen ? 'border-teal-500' : 'border-slate-800 dark:border-slate-500'
-                } relative h-max w-full rounded border border-l-8 bg-white p-4 transition-colors duration-300 hover:border-teal-500 dark:bg-gray-800 dark:hover:border-teal-500`}
+                } relative h-max rounded border border-l-8 bg-white p-4 transition-colors duration-300 hover:border-teal-500 dark:bg-gray-800 dark:hover:border-teal-500`}
             >
                 <FaQuoteRight className='mb-2 h-5 w-5 transition-colors duration-300 dark:text-gray-200' />
                 {isOpen ? (
