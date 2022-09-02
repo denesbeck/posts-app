@@ -1,6 +1,5 @@
 import { StateSchema, ActionSchema, PostSchema } from 'reducers/globalReducer'
 import { NotificationManager } from 'react-notifications'
-import { forceCheck } from 'react-lazyload'
 
 function usePosts(state: StateSchema, dispatch: (action: ActionSchema) => void) {
     const getPosts = async () => {
@@ -37,7 +36,6 @@ function usePosts(state: StateSchema, dispatch: (action: ActionSchema) => void) 
             dispatch({ type: 'POSTS', value: [json, ...state.posts] })
             dispatch({ type: 'LOADING', value: false })
             NotificationManager.success('Post has been added successfully.')
-            forceCheck()
         } catch {
             NotificationManager.error('Internal server error: Unable to add new post.')
         }
@@ -70,7 +68,6 @@ function usePosts(state: StateSchema, dispatch: (action: ActionSchema) => void) 
             dispatch({ type: 'POSTS', value: postsCopy })
             dispatch({ type: 'LOADING', value: false })
             NotificationManager.success('Post has been updated successfully.')
-            forceCheck()
         } catch {
             NotificationManager.error('Internal server error: Unable to update post.')
         }
@@ -86,7 +83,6 @@ function usePosts(state: StateSchema, dispatch: (action: ActionSchema) => void) 
             dispatch({ type: 'POSTS', value: state.posts.filter((post: PostSchema) => post.id !== id) })
             dispatch({ type: 'LOADING', value: false })
             NotificationManager.success('Post has been deleted successfully.')
-            forceCheck()
         } catch {
             NotificationManager.error('Internal server error: Unable to delete post.')
         }

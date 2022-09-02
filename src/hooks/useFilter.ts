@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { forceVisible } from 'react-lazyload'
 import { StateSchema, ActionSchema } from 'reducers/globalReducer'
 
 function useFilter(state: StateSchema, dispatch: (action: ActionSchema) => void) {
@@ -13,7 +12,6 @@ function useFilter(state: StateSchema, dispatch: (action: ActionSchema) => void)
                     )
                 })
                 dispatch({ type: 'FILTERED_POSTS', value: filteredList })
-                forceVisible()
                 return
             }
             dispatch({ type: 'FILTERED_POSTS', value: state.posts })
