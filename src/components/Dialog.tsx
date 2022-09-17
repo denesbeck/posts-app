@@ -25,7 +25,14 @@ const Dialog = ({ isVisible, setIsVisible, handler, message }: DialogProps) => {
                 <div className='grid justify-center gap-y-4'>
                     <div className='text-base font-medium text-gray-800 dark:text-slate-200'>{message}</div>
                     <div className='flex items-center space-x-6'>
-                        <Button type='cancel' label='Delete' handler={() => handler()} />
+                        <Button
+                            type='cancel'
+                            label='Delete'
+                            handler={() => {
+                                handler()
+                                setIsVisible(false)
+                            }}
+                        />
                         <Button type='secondary' label='Cancel' handler={() => setIsVisible(false)} />
                     </div>
                 </div>
